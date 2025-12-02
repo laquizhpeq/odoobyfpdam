@@ -35,7 +35,9 @@ Después de levantar los contenedores, debes crear la base de datos desde la int
 3.  Haz clic en **"Create database"**.
 
 El proceso tardará unos minutos. Al finalizar, serás redirigido a la pantalla de inicio de sesión de Odoo.
-
+### Paso 4: creacion de backups mediante web
+1. Abre tu navegador (edge) y ve a http://localhost:8069/web/database/manager#
+2. si no te permite seleccionar la opcion de descarga pulsa F5 o limpia el cache
 ## Scripts Adicionales
 
 ### Backup de la Base de Datos
