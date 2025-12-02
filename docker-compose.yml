@@ -1,0 +1,44 @@
+# Versión de la sintaxis de Docker Compose. '3.8' es una buena elección moderna.
+version: '3.8'
+
+services:
+  # Servicio de Odoo
+  odoo:
+    # Volvemos a la imagen oficial y estable.
+    image: odoo:17.0
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8069:8069"
+    environment:
+      - HOST=${DB_HOST}
+      - USER=${DB_USER}
+      - PASSWORD=${DB_PASSWORD}
+      - MASTER_PASSWORD=my-super-secret-master-password
+    volumes:
+      - odoo-web-data:/var/lib/odoo
+    restart: always
+    container_name: odoo
+
+  # Servicio de la Base de Datos (PostgreSQL)
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data
+    restart: always
+    container_name: postgres
+
+# Volúmenes para persistir los datos.
+volumes:
+  odoo-web-data:
+  odoo-db-data:
