@@ -17,7 +17,8 @@ services:
       - PASSWORD=${DB_PASSWORD}
       - MASTER_PASSWORD=my-super-secret-master-password
     volumes:
-      - odoo-web-data:/var/lib/odoo
+      # Se mapea el directorio de datos de Odoo a una carpeta local ./binmount
+      - ./odoo:/var/lib/odoo
     restart: always
     container_name: odoo
 
@@ -34,11 +35,11 @@ services:
       timeout: 5s
       retries: 5
     volumes:
+      # La base de datos utiliza un volumen nombrado, gestionado por Docker.
       - odoo-db-data:/var/lib/postgresql/data
     restart: always
     container_name: postgres
 
-# Volúmenes para persistir los datos.
+# Volumen nombrado para la base de datos.
 volumes:
-  odoo-web-data:
   odoo-db-data:
