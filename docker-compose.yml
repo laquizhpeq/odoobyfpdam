@@ -19,6 +19,7 @@ services:
     volumes:
       # Se mapea el directorio de datos de Odoo a una carpeta local ./binmount
       - ./odoo:/var/lib/odoo
+      - ./modulos:/mnt/extra-addons
     restart: always
     container_name: odoo
 
